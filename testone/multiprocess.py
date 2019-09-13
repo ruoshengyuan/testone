@@ -18,4 +18,19 @@ Income_Table = [
 		IncomeLookup(0,0.03,0)
 ]
 
-
+class Args(object):
+	def __init__(self):
+		self.args = sys.argv[1:]
+	def _value_after_option(self,option):
+		try:
+			index =  self.args.index(option)
+			return self.args[index + 1]
+		except (ValueError,IndexError):
+			print ('Parameter Error')
+			exit()
+	@property
+	def config_path(self):
+		return self._value_after_option('-c')
+	@property
+	def userdata_path(self):
+		return self._value_after_option('-d')	
