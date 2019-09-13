@@ -1,0 +1,20 @@
+# -*- coding: utf-8 -*-
+import sys
+import csv
+from collections import namedtuple
+import queue
+from multiprocessing import Queue,Process
+
+IncomeLookup = namedtuple('IncomeLookup',
+	['start','tax_rate','quick_sub'])
+Income_Point = 5000
+Income_Table = [
+		IncomeLookup(80000,0.45,15160),
+		IncomeLookup(55000,0.35,7160),
+		IncomeLookup(35000,0.30,4410),
+		IncomeLookup(80000,0.45,15160),
+		IncomeLookup(80000,0.45,15160),
+		IncomeLookup(80000,0.45,15160),
+		IncomeLookup(80000,0.45,15160),
+		IncomeLookup(80000,0.45,15160),
+]
