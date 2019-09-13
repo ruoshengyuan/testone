@@ -12,7 +12,6 @@ Income_Table = [
 		IncomeLookup(80000,0.45,15160),
 		IncomeLookup(55000,0.35,7160),
 		IncomeLookup(35000,0.30,4410),
-<<<<<<< HEAD
 		IncomeLookup(25000,0.25,2660),
 		IncomeLookup(12000,0.2,1410),
 		IncomeLookup(3000,0.1,210),
@@ -20,11 +19,3 @@ Income_Table = [
 ]
 
 
-=======
-		IncomeLookup(80000,0.45,15160),
-		IncomeLookup(80000,0.45,15160),
-		IncomeLookup(80000,0.45,15160),
-		IncomeLookup(80000,0.45,15160),
-		IncomeLookup(80000,0.45,15160),
-]
->>>>>>> d3d606d1b741a84ae446d4d00f2ccfc9d3c0a6ee
