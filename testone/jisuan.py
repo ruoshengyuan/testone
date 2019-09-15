@@ -8,7 +8,7 @@ def Night():
 			result.append((i,m,c))
 	return result
 
-NIGHT = Night() 
+NIGHT = list(set(Night() ))
 
 def Jia_9():
 	result = []
@@ -45,10 +45,10 @@ JIAN_9 =  list(set(Jian_9()))
 
 def Jia_qian():
 	result = []
-	for i in range (1,100):
-		for m in range (1,100):
-			for n in range (1,100):
-				if i+m+n<=100 and i+m+n>=20:
+	for i in range (10,100):
+		for m in range (10,100):
+			for n in range (10,100):
+				if i+m+n<=100 :
 					shizi = str(i)+'+'+str(m)+'+'+str(n)+'='
 					daan = i+m+n
 					result.append((shizi,daan))
