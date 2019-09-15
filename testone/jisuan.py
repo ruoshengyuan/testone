@@ -22,7 +22,7 @@ def Jia_9():
 				result.append((shizi2,daan))
 	return result
 
-JIA_9 = Jia_9()
+JIA_9 =  list(set(Jia_9()))
 
 def Jian_9():
 	result = []
@@ -40,4 +40,28 @@ def Jian_9():
 				result.append((shizi2,daan2))
 	return result
 
-JIAN_9 = Jian_9()
+JIAN_9 =  list(set(Jian_9()))
+
+
+def Jia_qian():
+	result = []
+	for i in range (1,100):
+		for m in range (1,100):
+			for n in range (1,100):
+				if i+m+n<=100 and i+m+n>=20:
+					shizi = str(i)+'+'+str(m)+'+'+str(n)+'='
+					daan = i+m+n
+					result.append((shizi,daan))
+
+	for i in range (1,100):
+		for m in range (1,100):
+			if i+m>=0 and i+m<=100  :
+				for n in range (1,100):
+					if i+m-n>=0 :
+						shizi3 = str(i)+'+'+str(m)+'-'+str(n)+'='
+						daan3 = i+m-n
+						result.append((shizi3,daan3))
+	return result
+
+JIA_QIAN = list(set(Jia_qian()))
+
