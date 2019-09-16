@@ -129,13 +129,13 @@ CHU_JIA_9 = Chu_Jia_9()
 
 
 if __name__ == "__main__" :
-    print('chengfajiafa',len(JIA_9),
-            'chengfajianfa',len(JIAN_9),
-            'chufajiafa',len(CHU_JIA_9),
-            'chufajianfa',len(CHU_JIAN_9),
-            'jiaqian',len(JIA_QIAN),
-            'jianqian',len(JIAN_QIAN)
-            )
+    # print('chengfajiafa',len(JIA_9),
+    #         'chengfajianfa',len(JIAN_9),
+    #         'chufajiafa',len(CHU_JIA_9),
+    #         'chufajianfa',len(CHU_JIAN_9),
+    #         'jiaqian',len(JIA_QIAN),
+    #         'jianqian',len(JIAN_QIAN)
+    #         )
 
     chengfajiafa = 200
     chengfajianfa = 200
@@ -193,20 +193,21 @@ if __name__ == "__main__" :
             xuhao.append(a)
             i = i +1
 
+
     result_new = []
     xuhao_new = []
     i = 0
     while i < len(result) :
         b = random.randint(0,len(result)-1)
         if b not in xuhao_new : 
-            result_new.append(result[b])
+            result_new.append(result[b][0])
             xuhao_new.append(b)
             i = i +1    
-
-    with open(shiti.csv,'w')  as csvfile:
-        writer = csv.writer(csvfile)
-        for m in result_new:
-            writer.writerow(m)
+    print(result_new)
+    with open('shiti.csv','w',newline="")  as csvfile:
+        writer = csv.writer(csvfile) 
+        writer.writerow(result_new)
+        print("Save,done")
 
 
 
