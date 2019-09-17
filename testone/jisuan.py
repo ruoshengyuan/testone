@@ -204,9 +204,13 @@ if __name__ == "__main__" :
             xuhao_new.append(b)
             i = i +1    
     print(result_new)
+
     with open('shiti.csv','w',newline="")  as csvfile:
         writer = csv.writer(csvfile) 
-        writer.writerow(result_new)
+        item = 0 
+        while item < len(result_new) :
+            writer.writerow(result_new[item])
+            i = i + 1
         print("Save,done")
 
 
