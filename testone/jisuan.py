@@ -96,13 +96,13 @@ def Chu_Jian_9():
     for i in range(len(NIGHT)) :
         for m in range (1,100):
             if m-NIGHT[i][0]>=0 and NIGHT[i][1]>1:
-                shizi = str(m)+'-'+str(NIGHT[i][2])+'÷'+str(NIGHT[i][1])+'='
+                shizi = str(m)+'-'+str(NIGHT[i][2])+'/'+str(NIGHT[i][1])+'='
                 daan = m-NIGHT[i][0]
                 result.append((shizi,daan))
     for i in range(len(NIGHT)) :
         for m in range (1,100):
             if NIGHT[i][0]-m>=0 and NIGHT[i][1]>1:
-                shizi2 = str(NIGHT[i][2])+'÷'+str(NIGHT[i][1])+'-'+str(m)+'='
+                shizi2 = str(NIGHT[i][2])+'/'+str(NIGHT[i][1])+'-'+str(m)+'='
                 daan2 = NIGHT[i][0]-m
                 result.append((shizi2,daan2))
     return result
@@ -114,13 +114,13 @@ def Chu_Jia_9():
     for i in range(len(NIGHT)) :
         for m in range (1,100):
             if m+NIGHT[i][0]<=100 and NIGHT[i][1]>1:
-                shizi = str(m)+'+'+str(NIGHT[i][2])+'÷'+str(NIGHT[i][1])+'='
+                shizi = str(m)+'+'+str(NIGHT[i][2])+'/'+str(NIGHT[i][1])+'='
                 daan = m+NIGHT[i][0]
                 result.append((shizi,daan))
     for i in range(len(NIGHT)) :
         for m in range (1,100):
             if NIGHT[i][0]+m<=100 and NIGHT[i][1]>1:
-                shizi2 = str(NIGHT[i][2])+'÷'+str(NIGHT[i][1])+'+'+str(m)+'='
+                shizi2 = str(NIGHT[i][2])+'/'+str(NIGHT[i][1])+'+'+str(m)+'='
                 daan2 = NIGHT[i][0]+m
                 result.append((shizi2,daan2))
     return result
@@ -205,12 +205,14 @@ if __name__ == "__main__" :
             i = i +1    
     print(result_new)
 
-    with open('shiti.csv','w',newline="")  as csvfile:
+    with open('shiti.csv','w')  as csvfile:
         writer = csv.writer(csvfile) 
-        item = 0 
-        while item < len(result_new) :
-            writer.writerow(result_new[item])
-            i = i + 1
+
+        writer.writerow(result_new)
+        # item = 0 
+        # while item < len(result_new) :
+        #     writer.writerow(result_new[item])
+        #     i = i + 1
         print("Save,done")
 
 
