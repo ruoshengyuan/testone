@@ -22,12 +22,12 @@ def parse(docucode, txtcode):
 
                 # 打开在线PDF文档
                 #_path = baseurl + quote(docucode) + "?random=0.3006649122149502"
-                _path = baseurl + quote(docucode)
-                request = Request(url=_path, headers=headers)  # 随机从user_agent列表中抽取一个元素
-                fp = urlopen(request,timeout=500)    #timeout设置超时的时间,防止出现访问超时问题
+                #_path = baseurl + quote(docucode)
+                #request = Request(url=_path, headers=headers)  # 随机从user_agent列表中抽取一个元素
+                #fp = urlopen(request,timeout=500)    #timeout设置超时的时间,防止出现访问超时问题
                 # 读取本地文件
-                # path = './2015.pdf'
-                # fp = open(path, 'rb')
+                path = '1.pdf'
+                fp = open(path, 'rb')
                 # 用文件对象来创建一个pdf文档分析器
                 praser_pdf = PDFParser(fp)
                 # 创建一个PDF文档
@@ -50,6 +50,8 @@ def parse(docucode, txtcode):
                         device = PDFPageAggregator(rsrcmgr, laparams=laparams)
                         # 创建一个PDF页面解释器对象
                         interpreter = PDFPageInterpreter(rsrcmgr, device)
+                        
+                        
                         # 循环遍历列表，每次处理一页的内容
                         # doc.get_pages() 获取page列表
                         for page in doc.get_pages():
