@@ -7,15 +7,20 @@ from pdfminer.layout import LTTextBoxHorizontal, LAParams
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.pdfinterp import PDFTextExtractionNotAllowed
 from pdfminer.pdfparser import PDFParser, PDFDocument
+from pandas.core.frame import DataFrame
 
-FENGZHUANG={'L':'3225','K':'3225','M':'DIP','D':'7050'}
 DIANYA={'3':'3.3V','2.85':'2.85V','2.5':'2.5V','1.8':'1.8V','5':'5.0V'}
 ZHANKONG={'5':'45%~55%','6':'40%~60%'}
 SHUCHU={'D':'LVDS','P':'PECL/LVPECL','H':'HCSL'}
-CRYSTAL=('K','KC','KD','N','C','D','HC','WB','J')
-OSC=('L','R','OF','ON')
-CFOSC=('LH','RH','OH')
 
+def fengzhuang(type1):
+    data = open(r'/home/shiyanlou/testone/testone/typecfg.csv',encoding='gbk')
+    jjj = pd.read_csv(data,dtype="str")
+    if type1 in list(jjj.type[0:]) :
+        a = list(jjj[jjj.type==type1].values[0])
+        return a
+    else :
+        return('','','','')
 def filelist():
     pdflist = []
     for files in os.walk("/home/shiyanlou/testone/testone/"):
@@ -72,31 +77,36 @@ def infolist(allinfo):
     return info
 def wuliao(liaohao):
     array = str(liaohao).split('-')
-    result = []
-    for i in CRYSTAL :
-        if array[0] == i:
-            sp = ''
-            sp = array[4][0:1]
-            wp = ''
-            wp = array[4][2:3]
-            result=[array[0],array[2],array[3],sp,wp]
-    return result
-
+    type1 = array[0].upper()
+    type2,fenzu,fz,bianma = fengzhuang(type1)
+    if bianma == '1' :
+        sp = array[4][0:2]
+        wp = array[4][2:4]
+        result = [fenzu,fz,array[0],array[2],sp,array[5],array[3]]
+    elif bianma == '2' :
+        result = [fenzu,fz,array[0],array[1],array[3],array[4],array[2]]
+    elif bianma == '3' :
+        result = [fenzu,fz,array[0],array[3],array[4],array[5],'']
+    else :
+        result=['','','','','','','']
+    return result 
 
 
 if __name__ == "__main__":
     file_list = filelist()
     results = []
-
     for pdfway in file_list:
-        linshi = []
-        all_info = parse(pdfway)
-        new_info = infolist(all_info)
-        linshi.append(pdfway)
-        linshi.extend(new_info)
-        liaohao = new_info[1]
-        wuliaoinfo = wuliao(liaohao)
-        linshi.extend(wuliaoinfo)
-        results.append(linshi)
-    print(len(results))
-    print(results)
+            linshi = []
+            all_info = parse(pdfway)
+            new_info = infolist(all_info)
+            linshi.append(pdfway)
+            linshi.extend(new_info)
+            liaohao = new_info[1]
+            wuliaoinfo = wuliao(liaohao)
+            linshi.extend(wuliaoinfo)
+            results.append(linshi)
+    final = DataFrame(results)
+    final.columns=['wenjian','leibie','liaohao','kehu','guigeshu','riqi','bianxie','lei','fz','type','pindian','pincha','wendu','fuzai']
+    final.to_excel("abc.xlsx")
+    # print(len(results))
+    # print(results)
