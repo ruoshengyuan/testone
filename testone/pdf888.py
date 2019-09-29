@@ -106,7 +106,7 @@ if __name__ == "__main__":
             linshi.extend(wuliaoinfo)
             results.append(linshi)
     final = DataFrame(results)
-    final.columns=['wenjian','leibie','liaohao','kehu','guigeshu','riqi','bianxie','lei','fz','type','pindian','pincha','wendu','fuzai']
+    final.columns=['源文件','英文类','料号','客户','规格书','日期','编写','中文类','封装','产品代号','频点','频差','温度','负载']
     final.to_excel("abc.xlsx")
     # print(len(results))
     # print(results)
