@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
 import os
+import shutil
 import pandas as pd
 from pdfminer.converter import PDFPageAggregator
 from pdfminer.layout import LTTextBoxHorizontal, LAParams
@@ -21,9 +22,9 @@ def fengzhuang(type1):
         return a
     else :
         return('','','','')
-def filelist():
+def filelist(oldpath):
     pdflist = []
-    for files in os.walk("/home/shiyanlou/testone/testone/"):
+    for files in os.walk(oldpath):
         for name in files:
             for real in name :
                 (realname,nametype) = os.path.splitext(real)
@@ -53,9 +54,9 @@ def parse(filepath):
                     if isinstance(out, LTTextBoxHorizontal):
                         results.append(out.get_text().strip("\n"))
                 return(results)
-
         except Exception as e:     
             print("a", str(e))
+
 def infolist(allinfo):
     leibie = ()
     liaohao = ()
@@ -64,16 +65,22 @@ def infolist(allinfo):
     riqi = ()
     bianxie = ()
     info = []
-    for i in range(len(allinfo)) :
-        if re.match('.*-.*-.*-.*-.*',allinfo[i],re.I|re.M):
-            leibie = str(allinfo[i-1]).strip()
-            liaohao = str(allinfo[i]).strip()
-            kehu = str(allinfo[i+1]).strip()
-        if re.match('\d\d\d\d-.*-.*',allinfo[i],re.I|re.M):
-            guigeshu = str(allinfo[i-1]).strip()
-            riqi = str(allinfo[i]).strip()
-            bianxie = str(allinfo[i+1]).strip()
-    info = [leibie,liaohao,kehu,guigeshu,riqi,bianxie]
+    if allinfo :
+        for i in range(len(allinfo)) :
+            if re.match('.*-.*-.*-.*-.*',allinfo[i],re.I|re.M):
+                leibie = str(allinfo[i-1]).strip()
+                liaohao = str(allinfo[i]).strip()
+                kehu = str(allinfo[i+1]).strip()
+            if re.match('\d\d\d\d-.*-.*',allinfo[i],re.I|re.M):
+                guigeshu = str(allinfo[i-1]).strip()
+                riqi = str(allinfo[i]).strip()
+                bianxie = str(allinfo[i+1]).strip()
+        if liaohao :
+            info = [leibie,liaohao,kehu,guigeshu,riqi,bianxie]
+        else :
+            info = ['','','','','','']
+    else :
+        info = ['','','','','','']    
     return info
 def wuliao(liaohao):
     array = str(liaohao).split('-')
@@ -90,23 +97,42 @@ def wuliao(liaohao):
     else :
         result=['','','','','','','']
     return result 
+def copyrename(oldfile,newname,newpath):
+    newname1 = os.path.join(newpath,newname+'.pdf')
+    if os.path.exists(newname1):
+        print("file is exists :Cannot copy "+oldfile+" To Target directory")
+    else :
+        shutil.copyfile(oldfile,newname1)
 
 
 if __name__ == "__main__":
-    file_list = filelist()
+
     results = []
+    newpath = '/home/shiyanlou/newpdf/'
+    oldpath= '/home/shiyanlou/testone/testone'
+    file_list = filelist(oldpath)
+    if os.path.exists(newpath):
+        print("Export directory is exists")
+    else : 
+        os.mkdir(newpath)
     for pdfway in file_list:
-            linshi = []
-            all_info = parse(pdfway)
-            new_info = infolist(all_info)
-            linshi.append(pdfway)
-            linshi.extend(new_info)
-            liaohao = new_info[1]
-            wuliaoinfo = wuliao(liaohao)
-            linshi.extend(wuliaoinfo)
-            results.append(linshi)
-    final = DataFrame(results)
-    final.columns=['源文件','英文类','料号','客户','规格书','日期','编写','中文类','封装','产品代号','频点','频差','温度','负载']
+        linshi = []
+        all_info = parse(pdfway)
+        new_info = infolist(all_info)
+        linshi.append(pdfway)
+        linshi.extend(new_info)
+        liaohao = new_info[1]
+        wuliaoinfo = wuliao(liaohao)
+        linshi.extend(wuliaoinfo)
+        newname = str(new_info[2])+' '+str(new_info[1])+' '+str(new_info[3])+' '+str(new_info[4])
+        linshi.append(newname)
+
+        results.append(linshi)
+    for i in range(len(results)) :
+        if results[i][2] :
+            copyrename(str(results[i][0]),str(results[i][-1]),newpath)
+    final = pd.DataFrame(results)
+    final.columns=['源文件','英文类','料号','客户','规格书','日期','编写','中文类','封装','产品代号','频点','频差','温度','负载','NEW_NAME']
     final.to_excel("abc.xlsx")
     # print(len(results))
     # print(results)
