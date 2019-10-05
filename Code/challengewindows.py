@@ -71,7 +71,7 @@ def split():
             row2=1+row2
         wb_new.save(path_new)
 
-    wb.save(path)
+
 
 
 
