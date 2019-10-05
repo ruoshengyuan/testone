@@ -29,8 +29,8 @@ def combine():
                 ws3.cell(row=row3,column=4).value=ws2.cell(row=row2,column=3).value 
 
     # 打印所有表的名称
-    for sheet in wb :
-        print (sheet.title)
+    # for sheet in wb :
+    #     print (sheet.title)
 
     wb.save(path)
 
@@ -53,8 +53,9 @@ def split():
     for i in nnn :
         path_new=i+'.xlsx'
         wb_new = Workbook()
-        ws4 = wb_new.active
-        linshi =[]
+        ws4 = wb_new.create_sheet(i)
+        del wb_new["Sheet"]
+        linshi =[ (ws3.cell(row=1,column=1).value,ws3.cell(row=1,column=2).value,ws3.cell(row=1,column=3).value,ws3.cell(row=1,column=4).value)]
         ooo=()
         for row3 in range(2,ws3.max_row+1):
             if i==ws3.cell(row=row3,column=5).value :
