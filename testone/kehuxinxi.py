@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from datetime import datetime
 from pandas import Series, DataFrame
+from openpyxl import load_workbook
 # 0'企业名称' 
 # 1'经营状态' 
 # 2'法定代表人' 
@@ -29,8 +30,12 @@ from pandas import Series, DataFrame
 
 
 if __name__ == "__main__":
-    path = 'D:\\123456789.xls'
-    jjj=pd.read_excel(path)
+    path = 'D:\\我的文档\\GitHub\\testone\\testone\\a123.xlsx'
+    jjj=load_workbook(path)
+    jjj[0][1]
+#    jjj.values
+#    jjj.dtypes
+    type(jjj)   
 #
 #    state = jjj.groupby(keys='经营状态')
 #    #获取所有状态
@@ -40,7 +45,7 @@ if __name__ == "__main__":
 #            print("\n{0}".format(data[0:2]))       
 #    print("\n{0}".format(jjj.columns.values))
 
-    jjj.groupby("经营状态").
+
 #print("\n{0}".format(jjj.columns.values))
 
 #dir(state)
