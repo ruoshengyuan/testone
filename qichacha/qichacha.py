@@ -36,7 +36,7 @@ def craw(url,key_word,x):
             'Referer': re,
             'Accept-Encoding':'gzip, deflate, br',
             'Accept-Language':'zh-CN,zh;q=0.9',
-            'Cookie':r'Hm_lvt_3456bee468c83cc63fb5147f119f1075',  #设置自己浏览器的cookie  chrome://settings/cookies
+            'Cookie':r'CNZZDATA1254842228',  #设置自己浏览器的cookie  chrome://settings/cookies
             }
  
     try:
@@ -100,18 +100,18 @@ if __name__ == '__main__':
     g_addr_list=[]
     g_state_list=[]
  
-    key_word = input('请输入您想搜索的关键词：')
-    num = int(input('请输入您想检索的次数：'))+1
-    sleep_time = int(input('请输入每次检索延时的秒数：'))
+    key_word = '开心'
+    num = 2
+    sleep_time = 3
      
     key_word = urllib.parse.quote(key_word)
      
     print('正在搜索，请稍后')
      
-    for x in range(1,num):
-        url = r'https://www.qichacha.com/search_index?key={}&ajaxflag=1&p={}&'.format(key_word,x)
-        s1 = craw(url,key_word,x)
-        time.sleep(sleep_time)
+
+    url = r'https://www.qichacha.com/search_index?key=开心&ajaxflag=1&p=1&'
+    s1 = craw(url,key_word,x)
+    time.sleep(sleep_time)
     workbook = xlwt.Workbook()
     #创建sheet对象，新建sheet
     sheet1 = workbook.add_sheet('企查查数据', cell_overwrite_ok=True)
