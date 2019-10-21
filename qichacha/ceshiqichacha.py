@@ -22,24 +22,23 @@ from bs4 import BeautifulSoup
 import xlwt
 import time
 import urllib
+import re
  
 def Craw(url,key_word):
+    sleep_time = 10   #检索间隔时间
+    time.sleep(sleep_time)
     User_Agent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:56.0) Gecko/20100101 Firefox/56.0'
-#    if x == 0:
-#        re = 'http://www.qichacha.com/search?key='+key_word
-#    else:
-#        re = 'https://www.qichacha.com/search?key={}#p:{}&'.format(key_word,x-1)
-    re = r'https://www.qichacha.com/search?key='+key_word
+    re = url
     headers = {
             'Host':'www.qichacha.com',
             'Connection': 'keep-alive',
             'Accept':r'text/html, */*; q=0.01',
             'X-Requested-With': 'XMLHttpRequest',
-            'User-Agent':r'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36',
+            'User-Agent':r'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36',
             'Referer': re,
             'Accept-Encoding':'gzip, deflate, br',
             'Accept-Language':'zh-CN,zh;q=0.9',
-            'Cookie':r'519542629-1560237892-https%253A%252F%252Fwww.so.com%252F%7C1571293316',  #设置自己浏览器的cookie  chrome://settings/cookies
+            'Cookie':r'%7B%22did%22%3A%20%2216dd8729700877-0e764955705a46-43450521-1fa400-16dd8729701242%22%7D',  #设置自己浏览器的cookie  chrome://settings/cookies
             #Hm_lvt_3456bee468c83cc63fb5147f119f1075
             }
  
@@ -52,7 +51,20 @@ def Craw(url,key_word):
         soup = BeautifulSoup(response.text,'lxml')
     except Exception:
         print('请求都不让，这企查查是想逆天吗？？？')
+        
     result=[]
+    
+    gongsi=''
+    tags=''
+    faren=''
+    zhuceziben=''
+    riqi=''
+    email=''
+    phone=''
+    addr=''
+    state=''
+    wangzhi=''
+    new_array=[]
     try:
         com_all_info = soup.find_all(class_='m_srchList')[0].tbody
         com_all_info_array = com_all_info.select('tr')
@@ -65,51 +77,88 @@ def Craw(url,key_word):
         phone = com_all_info_array[0].select('td')[2].select('p')[1].select('.m-l')[0].text.strip('电话：')    #获取法人手机号
         addr = com_all_info_array[0].select('td')[2].select('p')[2].text.strip().strip('地址：')    #获取公司地址
         state = com_all_info_array[0].select('td')[3].select('.nstatus.text-success-lt.m-l-xs')[0].text.strip()  #获取公司状态
-        
-#        wangzhi = com_all_info_array[0].select('td')[2].a #wangzhi
-        
-        result = [gongsi,tags,faren,zhuceziben,riqi,email,phone,addr,state]                                 
-
+             
     except Exception:
-        print('好像被拒绝访问了呢...请稍后再试叭...'+key_word)
-    
-     
+        print('搜索页无采集到...'+url)
+        gongsi = '搜索页无采集到...'
+        
+    try:        
+        wangzhi = 'https://www.qichacha.com'+str((com_all_info_array[0].select('td')[2].select('.ma_h1')[0].attrs)['href']) #wangzhi
+        new_array = Craw_inside(wangzhi)
+    except Exception:
+        print('搜索页未能获得跳转网页地址...'+url)  
+        tags='搜索页未能获得跳转网页地址...'
+        
+    result = [gongsi,tags,faren,zhuceziben,riqi,email,phone,addr,state]  
+    result.extend(new_array)     
     return(result)
 
- 
+def Craw_inside(url):
+    sleep_time = 10   #检索间隔时间
+    time.sleep(sleep_time)
+    User_Agent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:56.0) Gecko/20100101 Firefox/56.0' #详情页
+    headers = {
+            'Host':'www.qichacha.com',
+            'Connection': 'keep-alive',
+            'Accept':r'text/html, */*; q=0.01',
+            'X-Requested-With': 'XMLHttpRequest',
+            'User-Agent':r'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36',
+            'Referer': url,
+            'Accept-Encoding':'gzip, deflate, br',
+            'Accept-Language':'zh-CN,zh;q=0.9',
+            'Cookie':r'%7B%22did%22%3A%20%2216dd8729700877-0e764955705a46-43450521-1fa400-16dd8729701242%22%7D',  #设置自己浏览器的cookie  chrome://settings/cookies
+            #Hm_lvt_3456bee468c83cc63fb5147f119f1075
+            }
+     
+    try:
+        response = requests.get(url,headers = headers)
+        if response.status_code != 200:
+            response.encoding = 'utf-8'
+            print(response.status_code)
+            print('ERROR')    
+        soup = BeautifulSoup(response.text,'lxml')
+    except Exception:
+        print('详情页：请求都不让，这企查查是想逆天吗？？？')
+    result=[]
+    
+
+    wangzhan=''
+    shijiao=''
+    leixing=''
+    hangye=''
+    canbao=''
+    renshu=''
+    fanwei=''
+    jianjie=''
+    fengxian=''
+    
+    try:
+
+        b=str(soup.find_all(id='Cominfo'))
+
+        shijiao=re.findall('实缴资本 </td> <td width="30%"> (.*?) </td>',b)[0].strip(' ')
+        leixing=re.findall('</td> </tr> <tr> <td class="tb">企业类型</td> <td class="">\n(.*)',b)[0].strip()
+        hangye=re.findall('<td class="tb">所属行业</td> <td class="">\n(.*)',b)[0].strip()
+        canbao=re.findall('参保人数\n.*\n(.*)',b)[0].strip(' ')
+        renshu=re.findall('人员规模\n.*\n(.*)',b)[0].strip(' ')
+        fanwei=re.findall('经营范围</td> <td class="" colspan="3">\n(.*)</td>',b)[0].strip(' ')
+
+    
+    except Exception:
+        print('详情页没有采集到常规数据...'+url)
+        shijiao='详情页没有采集到常规数据...'
+    try:
+        n=str(soup.select('.dcontent')[0].select('div')[0].select('span '))  #获取网址信息
+        wangzhan=re.findall('进入官网">(.*?)</a> ',n)[0].strip(' ')
+        jianjie=soup.find_all(class_='m-t-sm m-b-sm')[0].text
+        fengxian=soup.find_all(class_='risk-panel b-a')[0].text.replace(' ', '').replace('\n', '')
+        
+                                      
+    except Exception:
+        print('详情页简介官网风险等没有采集到...'+url)
+        wangzhan='详情页简介官网风险等没有采集到...'
+    result = [shijiao,leixing,hangye,canbao,renshu,fanwei,wangzhan,jianjie,fengxian]    
+    return(result)
 
 
 
-#    workbook = xlwt.Workbook()  select('href')
-#    #创建sheet对象，新建sheet
-#    sheet1 = workbook.add_sheet('企查查数据', cell_overwrite_ok=True)
-#    #---设置excel样式---
-#    #初始化样式
-#    style = xlwt.XFStyle()
-#    #创建字体样式
-#    font = xlwt.Font()
-#    font.name = '仿宋'
-##    font.bold = True #加粗
-#    #设置字体
-#    style.font = font
-#    #使用样式写入数据
-#    print('正在存储数据，请勿打开excel')
-#    #向sheet中写入数据
-#    name_list = ['公司名字','公司标签','法定法人','注册资本','成立日期','法人邮箱','法人电话','公司地址','公司状态']
-#    for cc in range(0,len(name_list)):
-#        sheet1.write(0,cc,name_list[cc],style)
-#    for i in range(0,len(g_name_list)):
-#        print(g_name_list[i])
-#        sheet1.write(i+1,0,g_name_list[i],style)#公司名字
-#        sheet1.write(i+1,1,g_tag_list[i],style)#公司标签
-#        sheet1.write(i+1,2,r_name_list[i],style)#法定法人
-#        sheet1.write(i+1,3,g_money_list[i],style)#注册资本
-#        sheet1.write(i+1,4,g_date_list[i],style)#成立日期
-#        sheet1.write(i+1,5,r_email_list[i],style)#法人邮箱
-#        sheet1.write(i+1,6,r_phone_list[i],style)#法人电话
-#        sheet1.write(i+1,7,g_addr_list[i],style)#公司地址
-#        sheet1.write(i+1,8,g_state_list[i],style)#公司状态
-#    #保存excel文件，有同名的直接覆盖
-#    workbook.save(r"D:\wyy-qcc-"+time.strftime("%Y-%m-%d-%H-%M-%S", time.localtime()) +".xls")
-#    print('保存完毕~')
-#

@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 import xlwt
 import time
 import urllib
-from ceshiqichacha import Craw
+from ceshiqichacha import Craw,Craw_inside
 from openpyxl import load_workbook
 from openpyxl import Workbook
 
@@ -26,46 +26,30 @@ for row in ws.iter_rows():
 
 wb2 = Workbook()
 ws2 = wb2.active
-ws2.append(['公司抬头',
-'姓名',
-'手机号',
-'邮箱',
-'座机',
-'QQ',
-'微信',
-'职位',
-'部门',
-'行业类型',
-'客户类型',
-'名单来源',
-'回访人',
-'地址',
-'是否注册',
-'注册时间',
-'注册账号',
-'绑定手机',
-'绑定邮箱',
-'客服代表',
-'经营范围',
-'公司','标签','法人','注册资本','成立日期','邮件','电话','地址','公司状态'
+ws2.append(['公司抬头','姓名','手机号','邮箱','座机','QQ','微信','职位','部门','行业类型','客户类型','名单来源',
+'回访人','地址','是否注册','注册时间','注册账号','绑定手机','绑定邮箱','客服代表','经营范围',
+'公司','标签','法人','注册资本','成立日期','邮件','电话','地址','公司状态',
+'网站','实缴资本','企业类型','所属行业','参保人数','人员规模','经营范围','简介','风险'
 ])
    
-for row in rows[1:2] :
+for row in rows[50:100] :
+
     key_word = str(row[0].value)
     print(key_word)
-    key_word = urllib.parse.quote(key_word)    
-    url = r'https://www.qichacha.com/search?key='+key_word
-    result = Craw(url,key_word)
-    sleep_time = 5   #检索间隔时间
-    time.sleep(sleep_time)
-    new_row =[]
-    for m in range(len(row)):
-        new_row.append(row[m].value)
-    new_row.extend(result)
-    
-
-    ws2.append(new_row)
-
+    if  key_word:
+        key_word2 = urllib.parse.quote(key_word)    
+        url = r'https://www.qichacha.com/search?key='+key_word2
+        result = Craw(url,key_word2)
+        new_row =[]
+        for m in range(len(row)):
+            new_row.append(row[m].value)
+        if  result :
+            new_row.extend(result)
+            ws2.append(new_row)
+            
+        else :
+            print('无采集到任何数据，请检查'+key_word)
+        
 
 wb2.save('111.xlsx')
 #akk =[]

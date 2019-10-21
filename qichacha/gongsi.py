@@ -14,6 +14,7 @@ from bs4 import BeautifulSoup
 import xlwt
 import time
 import urllib
+from openpyxl import Workbook
  
 def Craw(url):
     User_Agent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:56.0) Gecko/20100101 Firefox/56.0'
@@ -41,8 +42,8 @@ def Craw(url):
         print('请求都不让，这企查查是想逆天吗？？？')
     result=[]
     try:
-        xinghao = soup.select('table')[0].select('td')[3].text
-        xiazai = (soup.select('table')[0].select('tr')[1].select('td')[2].select('a')[0].attrs)['href']
+        xinghao = str(soup.select('table')[0].select('td')[3].text)
+        xiazai = str((soup.select('table')[0].select('tr')[1].select('td')[2].select('a')[0].attrs)['href'])
 #        tags= com_all_info_array[0].select('td')[2].select('.search-tags')[0].text     #获取公司标签
 #        faren = com_all_info_array[0].select('td')[2].select('p')[0].a.text    #获取法人名
 #        zhuceziben = com_all_info_array[0].select('td')[2].select('p')[0].select('span')[0].text.strip('注册资本：')    #获取注册资本
@@ -56,16 +57,26 @@ def Craw(url):
         
         result = [xinghao,xiazai]                                 
     except Exception:
-        print('好像被拒绝访问了呢...请稍后再试叭...'+url)        
+        print('未获取数据...'+url)        
     return(result)
 
 if __name__=="__main__":
-    shuchu = []
-    for i in range(1,100):
+
+    wb = Workbook()
+    ws = wb.active
+    ws.append(('xinghao','xiazaidizhi','url'))
+    for i in range(150,400):
         url=r'http://www.cecxtal.com/queryItemById.html?itemId={}'.format(i)
-        a=Craw(url)
-        shuchu.append(a)
-    print(shuchu)
+        shuchu=Craw(url)
+        print(shuchu)
+        if shuchu :
+            shuchu.append(url)
+            ws.append(shuchu)
+        sleep_time = 3   #检索间隔时间
+        time.sleep(sleep_time)
+        
+    wb.save('shishikan.xlsx')
+    
     
     
     
