@@ -65,29 +65,63 @@ def Craw(url,key_word):
     state=''
     wangzhi=''
     new_array=[]
+
+
+    com_all_info = soup.find_all(class_='m_srchList')[0].tbody
+    com_all_info_array = com_all_info.select('tr')
     try:
-        com_all_info = soup.find_all(class_='m_srchList')[0].tbody
-        com_all_info_array = com_all_info.select('tr')
-        gongsi = com_all_info_array[0].select('td')[2].select('.ma_h1')[0].text    #获取公司名
-        tags= com_all_info_array[0].select('td')[2].select('.search-tags')[0].text     #获取公司标签
-        faren = com_all_info_array[0].select('td')[2].select('p')[0].a.text    #获取法人名
-        zhuceziben = com_all_info_array[0].select('td')[2].select('p')[0].select('span')[0].text.strip('注册资本：')    #获取注册资本
-        riqi = com_all_info_array[0].select('td')[2].select('p')[0].select('span')[1].text.strip('成立日期：')    #获取公司注册时间
-        email = com_all_info_array[0].select('td')[2].select('p')[1].text.split('\n')[1].strip().strip('邮箱：')    #获取法人Email
-        phone = com_all_info_array[0].select('td')[2].select('p')[1].select('.m-l')[0].text.strip('电话：')    #获取法人手机号
-        addr = com_all_info_array[0].select('td')[2].select('p')[2].text.strip().strip('地址：')    #获取公司地址
-        state = com_all_info_array[0].select('td')[3].select('.nstatus.text-success-lt.m-l-xs')[0].text.strip()  #获取公司状态
-             
+        gongsi = com_all_info_array[0].select('td')[2].select('.ma_h1')[0].text
     except Exception:
-        print('搜索页无采集到...'+url)
-        gongsi = '搜索页无采集到...'
+        gongsi=''
+    try:
+        tags= com_all_info_array[0].select('td')[2].select('.search-tags')[0].text     #获取公司标签
+    except Exception:
+        tags=''
+    try:
+        faren = com_all_info_array[0].select('td')[2].select('p')[0].a.text    #获取法人名
+    except Exception:
+        faren=''
+    try:
+        zhuceziben = com_all_info_array[0].select('td')[2].select('p')[0].select('span')[0].text.strip('注册资本：')
+    except Exception:
+        zhuceziben=''
+    try:
+        riqi = com_all_info_array[0].select('td')[2].select('p')[0].select('span')[1].text.strip('成立日期：') 
+    except Exception:
+        riqi=''
+    try:
+        email = com_all_info_array[0].select('td')[2].select('p')[1].text.split('\n')[1].strip().strip('邮箱：')    
+    except Exception:
+        email=''
+    try:
+        phone = com_all_info_array[0].select('td')[2].select('p')[1].select('.m-l')[0].text.strip().strip('\n').strip('电话：')
+    except Exception:
+        phone=''
+    try:
+        addr = com_all_info_array[0].select('td')[2].select('p')[2].text.strip().strip('地址：')    #获取公司地址
+    except Exception:
+        addr=''
+    try:
+        state = com_all_info_array[0].select('td')[3].select('.nstatus.text-success-lt.m-l-xs')[0].text.strip()  #获取公司状态
+    except Exception:
+        state=''
         
-    try:        
+#    gongsi = com_all_info_array[0].select('td')[2].select('.ma_h1')[0].text    #获取公司名
+#    tags= com_all_info_array[0].select('td')[2].select('.search-tags')[0].text     #获取公司标签
+#    faren = com_all_info_array[0].select('td')[2].select('p')[0].a.text    #获取法人名
+#    zhuceziben = com_all_info_array[0].select('td')[2].select('p')[0].select('span')[0].text.strip('注册资本：')    #获取注册资本
+#    riqi = com_all_info_array[0].select('td')[2].select('p')[0].select('span')[1].text.strip('成立日期：')    #获取公司注册时间
+#    email = com_all_info_array[0].select('td')[2].select('p')[1].text.split('\n')[1].strip().strip('邮箱：')    #获取法人Email
+#    phone = com_all_info_array[0].select('td')[2].select('p')[1].select('.m-l')[0].text.strip().strip('\n').strip('电话：')    #获取法人手机号
+#    addr = com_all_info_array[0].select('td')[2].select('p')[2].text.strip().strip('地址：')    #获取公司地址
+#    state = com_all_info_array[0].select('td')[3].select('.nstatus.text-success-lt.m-l-xs')[0].text.strip()  #获取公司状态
+     
+    try :  
         wangzhi = 'https://www.qichacha.com'+str((com_all_info_array[0].select('td')[2].select('.ma_h1')[0].attrs)['href']) #wangzhi
         new_array = Craw_inside(wangzhi)
     except Exception:
-        print('搜索页未能获得跳转网页地址...'+url)  
-        tags='搜索页未能获得跳转网页地址...'
+        print('不能获取详情页连接地址')
+        new_array =[]
         
     result = [gongsi,tags,faren,zhuceziben,riqi,email,phone,addr,state]  
     result.extend(new_array)     
@@ -121,21 +155,33 @@ def Craw_inside(url):
         print('详情页：请求都不让，这企查查是想逆天吗？？？')
     result=[]
     
-
+    mingcheng = ''
+    dianhua = ''
+    gengduo = ''
+    youxiang = ''
     wangzhan=''
-    shijiao=''
-    leixing=''
+
+    fading = ''
+    zhuce = ''
+    shijiao=''  #you
+    zhuangtai = ''
+    shijian = '' #you
+    leixing='' #you
     hangye=''
-    canbao=''
-    renshu=''
-    fanwei=''
-    jianjie=''
-    fengxian=''
+    dengji=''
+    quyu=''    
+    canbao='' #you
+    renshu=''#you
+    fanwei='' #you
     
-    try:
+    jianjie=''    #you
+    fengxian='' #you
+    
+    try:     #每一个都分开来try，避免漏采数据，重点是详情页页面信息，公司名称，电话，更多电话，邮箱，网站，地址，简介，
+#        法定代表人，注册资本，实缴资本，经营状态，成立日期，企业类型，所属行业，登记机关，所属地区，参保人数，人员规模，经营范围
 
         b=str(soup.find_all(id='Cominfo'))
-
+        
         shijiao=re.findall('实缴资本 </td> <td width="30%"> (.*?) </td>',b)[0].strip(' ')
         leixing=re.findall('</td> </tr> <tr> <td class="tb">企业类型</td> <td class="">\n(.*)',b)[0].strip()
         hangye=re.findall('<td class="tb">所属行业</td> <td class="">\n(.*)',b)[0].strip()
@@ -145,9 +191,9 @@ def Craw_inside(url):
 
     
     except Exception:
-        print('详情页没有采集到常规数据...'+url)
-        shijiao='详情页没有采集到常规数据...'
-    try:
+        print('详情页采集基础信息不完整...'+url)
+
+    try:    #每一个都分开来try，避免漏采数据
         n=str(soup.select('.dcontent')[0].select('div')[0].select('span '))  #获取网址信息
         wangzhan=re.findall('进入官网">(.*?)</a> ',n)[0].strip(' ')
         jianjie=soup.find_all(class_='m-t-sm m-b-sm')[0].text
@@ -156,7 +202,7 @@ def Craw_inside(url):
                                       
     except Exception:
         print('详情页简介官网风险等没有采集到...'+url)
-        wangzhan='详情页简介官网风险等没有采集到...'
+
     result = [shijiao,leixing,hangye,canbao,renshu,fanwei,wangzhan,jianjie,fengxian]    
     return(result)
 
