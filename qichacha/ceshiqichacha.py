@@ -27,7 +27,7 @@ import re
 def Craw(url,key_word):
     sleep_time = 10   #检索间隔时间
     time.sleep(sleep_time)
-    User_Agent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:56.0) Gecko/20100101 Firefox/56.0'
+    User_Agent = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36'
     re = url
     headers = {
             'Host':'www.qichacha.com',
@@ -38,7 +38,7 @@ def Craw(url,key_word):
             'Referer': re,
             'Accept-Encoding':'gzip, deflate, br',
             'Accept-Language':'zh-CN,zh;q=0.9',
-            'Cookie':r'%7B%22did%22%3A%20%2216dd8729700877-0e764955705a46-43450521-1fa400-16dd8729701242%22%7D',  #设置自己浏览器的cookie  chrome://settings/cookies
+            'Cookie':r'acw_tc=3cdfd94715712944734741510edf5221430510901350e464f5752d1fce; QCCSESSID=kjlo9oiui1r8kc80gamujlfhl0; zg_did=%7B%22did%22%3A%20%2216dd8729700877-0e764955705a46-43450521-1fa400-16dd8729701242%22%7D; _uab_collina=157129445153216988852851; UM_distinctid=16dd8729829179-0f61ae064054c-43450521-1fa400-16dd872982a541; Hm_lvt_3456bee468c83cc63fb5147f119f1075=1571294452; hasShow=1; CNZZDATA1254842228=519542629-1560237892-https%253A%252F%252Fwww.so.com%252F%7C1571631449; zg_de1d1a35bfa24ce29bbf2c7eb17e6c4f=%7B%22sid%22%3A%201571635728585%2C%22updated%22%3A%201571635787170%2C%22info%22%3A%201571294451475%2C%22superProperty%22%3A%20%22%7B%7D%22%2C%22platform%22%3A%20%22%7B%7D%22%2C%22utm%22%3A%20%22%7B%7D%22%2C%22referrerDomain%22%3A%20%22www.qichacha.com%22%2C%22cuid%22%3A%20%2290cc0846d205656f319d105628e03b33%22%2C%22zs%22%3A%200%2C%22sc%22%3A%200%7D; Hm_lpvt_3456bee468c83cc63fb5147f119f1075=1571635787',  #设置自己浏览器的cookie  chrome://settings/cookies
             #Hm_lvt_3456bee468c83cc63fb5147f119f1075
             }
  
@@ -96,7 +96,7 @@ def Craw(url,key_word):
 def Craw_inside(url):
     sleep_time = 10   #检索间隔时间
     time.sleep(sleep_time)
-    User_Agent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:56.0) Gecko/20100101 Firefox/56.0' #详情页
+    User_Agent = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36' #详情页
     headers = {
             'Host':'www.qichacha.com',
             'Connection': 'keep-alive',
@@ -106,7 +106,7 @@ def Craw_inside(url):
             'Referer': url,
             'Accept-Encoding':'gzip, deflate, br',
             'Accept-Language':'zh-CN,zh;q=0.9',
-            'Cookie':r'%7B%22did%22%3A%20%2216dd8729700877-0e764955705a46-43450521-1fa400-16dd8729701242%22%7D',  #设置自己浏览器的cookie  chrome://settings/cookies
+            'Cookie':r'acw_tc=3cdfd94715712944734741510edf5221430510901350e464f5752d1fce; QCCSESSID=kjlo9oiui1r8kc80gamujlfhl0; zg_did=%7B%22did%22%3A%20%2216dd8729700877-0e764955705a46-43450521-1fa400-16dd8729701242%22%7D; _uab_collina=157129445153216988852851; UM_distinctid=16dd8729829179-0f61ae064054c-43450521-1fa400-16dd872982a541; Hm_lvt_3456bee468c83cc63fb5147f119f1075=1571294452; hasShow=1; CNZZDATA1254842228=519542629-1560237892-https%253A%252F%252Fwww.so.com%252F%7C1571631449; zg_de1d1a35bfa24ce29bbf2c7eb17e6c4f=%7B%22sid%22%3A%201571635728585%2C%22updated%22%3A%201571635787170%2C%22info%22%3A%201571294451475%2C%22superProperty%22%3A%20%22%7B%7D%22%2C%22platform%22%3A%20%22%7B%7D%22%2C%22utm%22%3A%20%22%7B%7D%22%2C%22referrerDomain%22%3A%20%22www.qichacha.com%22%2C%22cuid%22%3A%20%2290cc0846d205656f319d105628e03b33%22%2C%22zs%22%3A%200%2C%22sc%22%3A%200%7D; Hm_lpvt_3456bee468c83cc63fb5147f119f1075=1571635787',  #设置自己浏览器的cookie  chrome://settings/cookies
             #Hm_lvt_3456bee468c83cc63fb5147f119f1075
             }
      

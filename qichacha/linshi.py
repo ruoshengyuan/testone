@@ -32,8 +32,7 @@ ws2.append(['公司抬头','姓名','手机号','邮箱','座机','QQ','微信',
 '网站','实缴资本','企业类型','所属行业','参保人数','人员规模','经营范围','简介','风险'
 ])
    
-for row in rows[50:100] :
-
+for row in rows[51:1000] :
     key_word = str(row[0].value)
     print(key_word)
     if  key_word:
@@ -46,12 +45,11 @@ for row in rows[50:100] :
         if  result :
             new_row.extend(result)
             ws2.append(new_row)
-            
-        else :
-            print('无采集到任何数据，请检查'+key_word)
-        
+    
+    while ws2.max_row==50:
+        wb2.save('111.xlsx')
 
-wb2.save('111.xlsx')
+
 #akk =[]
 #for row in rows[:2] :
 #    for m in range(len(row)) :
