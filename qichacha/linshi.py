@@ -37,7 +37,7 @@ all_list=[]
 #for index,values in enumerate(rou):
 #    print(str(index)+str(values[0]))
 cc=1
-for row in rows[201:1000] :
+for row in rows[401:1000] :
     key_word = str(row[0].value)
     print(str(cc)+str(key_word))
     cc=cc+1

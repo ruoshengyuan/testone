@@ -119,7 +119,7 @@ def Craw(url,key_word):
 #    state = com_all_info_array[0].select('td')[3].select('.nstatus.text-success-lt.m-l-xs')[0].text.strip()  #获取公司状态
      
     try :  
-        wangzhi = 'https://www.qichacha.com'+str((com_all_info_array[0].select('td')[2].select('.ma_h1')[0].attrs)['href']) #wangzhi
+        wangzhi = 'https://www.qichacha.com'+str((com_all_info_array[0].select('td')[2].select('.ma_h1')[0].attrs)['href'])+'#base'#wangzhi
         new_array = Craw_inside(wangzhi)
     except Exception:
         print('    不能获取跳转链接地址')
@@ -183,26 +183,85 @@ def Craw_inside(url):
     
          #每一个都分开来try，避免漏采数据，重点是详情页页面信息，公司名称，电话，更多电话，邮箱，网站，地址，简介，
 #        法定代表人，注册资本，实缴资本，经营状态，成立日期，企业类型，所属行业，登记机关，所属地区，参保人数，人员规模，经营范围
+         
 
+        
     try:    
         b=str(soup.find_all(id='Cominfo'))        
-        faren=soup.select('table')[0].select('h2')[0].text
-        zhuce=re.findall('注册资本 </td> <td width="30%"> (.*?) </td>',b)[0].strip(' ')
-        shijiao=re.findall('实缴资本 </td> <td width="30%"> (.*?) </td>',b)[0].strip(' ')
-        zhuangtai=re.findall('经营状态</td> <td class="">\n(.*?)</td>',b)[0].strip()
-        shijian=re.findall('成立日期</td> <td class="">\n(.*)',b)[0].strip()
-        leixing=re.findall('</td> </tr> <tr> <td class="tb">企业类型</td> <td class="">\n(.*)',b)[0].strip()      
-        hangye=re.findall('<td class="tb">所属行业</td> <td class="">\n(.*)',b)[0].strip()
-        jiguan=re.findall('登记机关</td> <td class="">\n(.*)',b)[0].strip()
-        quyu=re.findall('<td class="tb">所属地区</td> <td class="" style="max-width:301px;">\n(.*)',b)[0].strip()
-        canbao=re.findall('参保人数\n.*\n(.*)',b)[0].strip(' ')
-        renshu=re.findall('人员规模\n.*\n(.*)',b)[0].strip(' ')
-        fanwei=re.findall('经营范围</td> <td class="" colspan="3">\n(.*)</td>',b)[0].strip(' ')
-
-    
+        faren=re.findall('<h2 class="seo font-20">(.*?)</h2>',b)[0].strip(' ')
     except Exception:
-        print('    详情页 采集不成功(可能是股份公司或空白)...'+url)
-        faren = '详情页采集不成功'
+        faren =''
+
+    try:        
+        zhuce=re.findall('注册资本 </td> <td width="30%"> (.*?) </td>',b)[0].strip(' ')
+    except Exception:
+        zhuce =''
+
+    try:        
+        shijiao=re.findall('实缴资本 </td> <td width="30%"> (.*?) </td>',b)[0].strip(' ')
+    except Exception:
+        shijiao =''
+        
+    try:        
+        zhuangtai=re.findall('经营状态</td> <td class="">\n(.*?)</td>',b)[0].strip()
+    except Exception:
+        zhuangtai =''
+
+    try:        
+        shijian=re.findall('成立日期</td> <td class="">\n(.*)',b)[0].strip()
+    except Exception:
+        shijian =''
+        
+    try:        
+        leixing=re.findall('</td> </tr> <tr> <td class="tb">企业类型</td> <td class="">\n(.*)',b)[0].strip()  
+    except Exception:
+        leixing =''
+
+    try:        
+        hangye=re.findall('<td class="tb">所属行业</td> <td class="">\n(.*)',b)[0].strip()
+    except Exception:
+        hangye =''
+        
+    try:        
+        jiguan=re.findall('登记机关</td> <td class="">\n(.*)',b)[0].strip()
+    except Exception:
+        jiguan =''
+
+    try:        
+        quyu=re.findall('<td class="tb">所属地区</td> <td class="" style="max-width:301px;">\n(.*)',b)[0].strip()
+    except Exception:
+        quyu =''
+
+    try:        
+        canbao=re.findall('参保人数\n.*\n(.*)',b)[0].strip(' ')
+    except Exception:
+        canbao =''
+        
+    try:        
+        renshu=re.findall('人员规模\n.*\n(.*)',b)[0].strip(' ')
+    except Exception:
+        renshu =''
+
+    try:        
+        fanwei=re.findall('经营范围</td> <td class="" colspan="3">\n(.*)</td>',b)[0].strip(' ')
+    except Exception:
+        fanwei =''
+
+        
+#        zhuce=re.findall('注册资本 </td> <td width="30%"> (.*?) </td>',b)[0].strip(' ')
+#        shijiao=re.findall('实缴资本 </td> <td width="30%"> (.*?) </td>',b)[0].strip(' ')
+#        zhuangtai=re.findall('经营状态</td> <td class="">\n(.*?)</td>',b)[0].strip()
+#        shijian=re.findall('成立日期</td> <td class="">\n(.*)',b)[0].strip()
+#        leixing=re.findall('</td> </tr> <tr> <td class="tb">企业类型</td> <td class="">\n(.*)',b)[0].strip()      
+#        hangye=re.findall('<td class="tb">所属行业</td> <td class="">\n(.*)',b)[0].strip()
+#        jiguan=re.findall('登记机关</td> <td class="">\n(.*)',b)[0].strip()
+#        quyu=re.findall('<td class="tb">所属地区</td> <td class="" style="max-width:301px;">\n(.*)',b)[0].strip()
+#        canbao=re.findall('参保人数\n.*\n(.*)',b)[0].strip(' ')
+#        renshu=re.findall('人员规模\n.*\n(.*)',b)[0].strip(' ')
+#        fanwei=re.findall('经营范围</td> <td class="" colspan="3">\n(.*)</td>',b)[0].strip(' ')
+
+
+
 
     try:    #每一个都分开来try，避免漏采数据
         n=str(soup.find_all(class_='dcontent')[0])  #获取网址信息
