@@ -14,6 +14,7 @@ import urllib
 from ceshiqichacha import Craw,Craw_inside
 from openpyxl import load_workbook
 from openpyxl import Workbook
+import signal
 
 #打开表格，获取全部数据为rows列表，获取查询关键字列的数据，为data
 wb = load_workbook('d:\\testone\\qichacha\\abc.xlsx')
@@ -22,13 +23,24 @@ rows=[]
 
 for row in ws.iter_rows():
     rows.append(row)
+    
+def signal_handler(signal,frame):
+    print('You pressed Ctrl+C!')
+
+signal.signal(signal.SIGINT,signal_handler)
 
 
 all_list=[]
    
-for row in rows[51:1000] :
+#rou=[]
+#rou=[('adasd','asddad'),'asadasd','b','c','d']
+#for index,values in enumerate(rou):
+#    print(str(index)+str(values[0]))
+cc=1
+for row in rows[201:1000] :
     key_word = str(row[0].value)
-    print(key_word)
+    print(str(cc)+str(key_word))
+    cc=cc+1
     if  key_word:
         key_word2 = urllib.parse.quote(key_word)    
         url = r'https://www.qichacha.com/search?key='+key_word2
@@ -41,17 +53,18 @@ for row in rows[51:1000] :
             new_row.extend(result)
             all_list.append((new_row))
     
-    while len(all_list)==1:
+    while len(all_list)==50:
         wb2 = Workbook()
         ws2 = wb2.active
-#        ws2.append(['公司抬头','姓名','手机号','邮箱','座机','QQ','微信','职位','部门','行业类型','客户类型','名单来源',
-#        '回访人','地址','是否注册','注册时间','注册账号','绑定手机','绑定邮箱','客服代表','经营范围',
-#        '公司','标签','法人','注册资本','成立日期','邮件','电话','地址','状态',
-#        '实缴资本','企业类型','所属行业','参保人数','人员规模','经营范围','网站','简介','风险'
-#        ])
+        ws2.append(['公司抬头','姓名','手机号','邮箱','座机','QQ','微信','职位','部门','行业类型','客户类型','名单来源',
+        '回访人','地址','是否注册','注册时间','注册账号','绑定手机','绑定邮箱','客服代表','经营范围',
+        '公司','标签','法人','注册资本','成立日期','邮件','电话','地址','状态',
+        '名称','电话','更多电话','官网','邮箱','法人','注册资本','实缴资本','状态',
+        '成立时间','企业类型','所属行业','批准机关','区域','参保人数','人员规模','经营范围','简介','风险'
+        ])
         for i in all_list:
             ws2.append(i)
-        filename = time.strftime("%Y%m%d %H%M%S", time.localtime())
+        filename = time.strftime("%H%M%S", time.localtime())
 
         wb2.save('{}.xlsx'.format(filename))
         all_list=[]
