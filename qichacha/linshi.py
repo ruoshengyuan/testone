@@ -17,7 +17,7 @@ from openpyxl import Workbook
 import signal
 
 #打开表格，获取全部数据为rows列表，获取查询关键字列的数据，为data
-wb = load_workbook('d:\\testone\\qichacha\\abc.xlsx')
+wb = load_workbook('d:\\testone\\qichacha\\zaicha.xlsx')
 ws=wb.active
 rows=[]
 
@@ -37,7 +37,7 @@ all_list=[]
 #for index,values in enumerate(rou):
 #    print(str(index)+str(values[0]))
 cc=1
-for row in rows[401:1000] :
+for row in rows[1:260] :
     key_word = str(row[0].value)
     print(str(cc)+str(key_word))
     cc=cc+1

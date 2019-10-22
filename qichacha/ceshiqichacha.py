@@ -92,11 +92,11 @@ def Craw(url,key_word):
     except Exception:
         riqi=''
     try:
-        email = com_all_info_array[0].select('td')[2].select('p')[1].text.split('\n')[1].strip().strip('邮箱：')    
+        email = com_all_info_array[0].select('td')[2].select('p')[1].text.split('\n')[1].strip().strip('邮箱：').replace(' ', '').replace('\n', '')    
     except Exception:
         email=''
     try:
-        phone = com_all_info_array[0].select('td')[2].select('p')[1].select('.m-l')[0].text.strip().strip('\n').strip('电话：')
+        phone = com_all_info_array[0].select('td')[2].select('p')[1].select('.m-l')[0].text.strip().strip('\n').strip('电话：').replace(' ', '').replace('\n', '')
     except Exception:
         phone=''
     try:
