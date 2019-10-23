@@ -38,7 +38,7 @@ def Craw(url,key_word):
             'Referer': re,
             'Accept-Encoding':'gzip, deflate, br',
             'Accept-Language':'zh-CN,zh;q=0.9',
-            'Cookie':r'acw_tc=3cdfd94715712944734741510edf5221430510901350e464f5752d1fce; QCCSESSID=kjlo9oiui1r8kc80gamujlfhl0; zg_did=%7B%22did%22%3A%20%2216dd8729700877-0e764955705a46-43450521-1fa400-16dd8729701242%22%7D; _uab_collina=157129445153216988852851; UM_distinctid=16dd8729829179-0f61ae064054c-43450521-1fa400-16dd872982a541; Hm_lvt_3456bee468c83cc63fb5147f119f1075=1571294452; hasShow=1; CNZZDATA1254842228=519542629-1560237892-https%253A%252F%252Fwww.so.com%252F%7C1571703717; Hm_lpvt_3456bee468c83cc63fb5147f119f1075=1571704705; zg_de1d1a35bfa24ce29bbf2c7eb17e6c4f=%7B%22sid%22%3A%201571703708193%2C%22updated%22%3A%201571704808210%2C%22info%22%3A%201571294451475%2C%22superProperty%22%3A%20%22%7B%7D%22%2C%22platform%22%3A%20%22%7B%7D%22%2C%22utm%22%3A%20%22%7B%7D%22%2C%22referrerDomain%22%3A%20%22%22%2C%22cuid%22%3A%20%22d2ccb117cf68f3409ccdd36485180ac1%22%2C%22zs%22%3A%200%2C%22sc%22%3A%200%7D',  #设置自己浏览器的cookie  chrome://settings/cookies
+            'Cookie':r'acw_tc=3cdfd94715712944734741510edf5221430510901350e464f5752d1fce; QCCSESSID=kjlo9oiui1r8kc80gamujlfhl0; zg_did=%7B%22did%22%3A%20%2216dd8729700877-0e764955705a46-43450521-1fa400-16dd8729701242%22%7D; _uab_collina=157129445153216988852851; UM_distinctid=16dd8729829179-0f61ae064054c-43450521-1fa400-16dd872982a541; Hm_lvt_3456bee468c83cc63fb5147f119f1075=1571294452; CNZZDATA1254842228=519542629-1560237892-https%253A%252F%252Fwww.so.com%252F%7C1571790117; hasShow=1; Hm_lpvt_3456bee468c83cc63fb5147f119f1075=1571791738; zg_de1d1a35bfa24ce29bbf2c7eb17e6c4f=%7B%22sid%22%3A%201571791132812%2C%22updated%22%3A%201571791748043%2C%22info%22%3A%201571294451475%2C%22superProperty%22%3A%20%22%7B%7D%22%2C%22platform%22%3A%20%22%7B%7D%22%2C%22utm%22%3A%20%22%7B%7D%22%2C%22referrerDomain%22%3A%20%22%22%2C%22cuid%22%3A%20%223e77c70037f3a90aaff89ba8af651871%22%2C%22zs%22%3A%200%2C%22sc%22%3A%200%7D',  #设置自己浏览器的cookie  chrome://settings/cookies
             #Hm_lvt_3456bee468c83cc63fb5147f119f1075
             }
  
@@ -142,7 +142,7 @@ def Craw_inside(url):
             'Referer': url,
             'Accept-Encoding':'gzip, deflate, br',
             'Accept-Language':'zh-CN,zh;q=0.9',
-            'Cookie':r'acw_tc=3cdfd94715712944734741510edf5221430510901350e464f5752d1fce; QCCSESSID=kjlo9oiui1r8kc80gamujlfhl0; zg_did=%7B%22did%22%3A%20%2216dd8729700877-0e764955705a46-43450521-1fa400-16dd8729701242%22%7D; _uab_collina=157129445153216988852851; UM_distinctid=16dd8729829179-0f61ae064054c-43450521-1fa400-16dd872982a541; Hm_lvt_3456bee468c83cc63fb5147f119f1075=1571294452; hasShow=1; CNZZDATA1254842228=519542629-1560237892-https%253A%252F%252Fwww.so.com%252F%7C1571703717; Hm_lpvt_3456bee468c83cc63fb5147f119f1075=1571704705; zg_de1d1a35bfa24ce29bbf2c7eb17e6c4f=%7B%22sid%22%3A%201571703708193%2C%22updated%22%3A%201571704808210%2C%22info%22%3A%201571294451475%2C%22superProperty%22%3A%20%22%7B%7D%22%2C%22platform%22%3A%20%22%7B%7D%22%2C%22utm%22%3A%20%22%7B%7D%22%2C%22referrerDomain%22%3A%20%22%22%2C%22cuid%22%3A%20%22d2ccb117cf68f3409ccdd36485180ac1%22%2C%22zs%22%3A%200%2C%22sc%22%3A%200%7D',  #设置自己浏览器的cookie  chrome://settings/cookies
+            'Cookie':r'acw_tc=3cdfd94715712944734741510edf5221430510901350e464f5752d1fce; QCCSESSID=kjlo9oiui1r8kc80gamujlfhl0; zg_did=%7B%22did%22%3A%20%2216dd8729700877-0e764955705a46-43450521-1fa400-16dd8729701242%22%7D; _uab_collina=157129445153216988852851; UM_distinctid=16dd8729829179-0f61ae064054c-43450521-1fa400-16dd872982a541; Hm_lvt_3456bee468c83cc63fb5147f119f1075=1571294452; CNZZDATA1254842228=519542629-1560237892-https%253A%252F%252Fwww.so.com%252F%7C1571790117; hasShow=1; Hm_lpvt_3456bee468c83cc63fb5147f119f1075=1571791738; zg_de1d1a35bfa24ce29bbf2c7eb17e6c4f=%7B%22sid%22%3A%201571791132812%2C%22updated%22%3A%201571791748043%2C%22info%22%3A%201571294451475%2C%22superProperty%22%3A%20%22%7B%7D%22%2C%22platform%22%3A%20%22%7B%7D%22%2C%22utm%22%3A%20%22%7B%7D%22%2C%22referrerDomain%22%3A%20%22%22%2C%22cuid%22%3A%20%223e77c70037f3a90aaff89ba8af651871%22%2C%22zs%22%3A%200%2C%22sc%22%3A%200%7D',  #设置自己浏览器的cookie  chrome://settings/cookies
             #Hm_lvt_3456bee468c83cc63fb5147f119f1075
             }
      
@@ -180,18 +180,17 @@ def Craw_inside(url):
     jianjie=''    #you
     fengxian='' #you
        
-    
-         #每一个都分开来try，避免漏采数据，重点是详情页页面信息，公司名称，电话，更多电话，邮箱，网站，地址，简介，
-#        法定代表人，注册资本，实缴资本，经营状态，成立日期，企业类型，所属行业，登记机关，所属地区，参保人数，人员规模，经营范围
-         
-
         
     try:    
         b=str(soup.find_all(id='Cominfo'))        
+    except Exception:
+        print('详情页表格，采集异常')
+    
+    try:          
         faren=re.findall('<h2 class="seo font-20">(.*?)</h2>',b)[0].strip(' ')
     except Exception:
         faren =''
-
+    
     try:        
         zhuce=re.findall('注册资本 </td> <td width="30%"> (.*?) </td>',b)[0].strip(' ')
     except Exception:

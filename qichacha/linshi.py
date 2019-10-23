@@ -17,7 +17,7 @@ from openpyxl import Workbook
 import signal
 
 #打开表格，获取全部数据为rows列表，获取查询关键字列的数据，为data
-wb = load_workbook('d:\\testone\\qichacha\\zaicha.xlsx')
+wb = load_workbook('d:\\testone\\qichacha\\zaicha222.xlsx')
 ws=wb.active
 rows=[]
 
@@ -37,7 +37,7 @@ all_list=[]
 #for index,values in enumerate(rou):
 #    print(str(index)+str(values[0]))
 cc=1
-for row in rows[1:260] :
+for row in rows[121:160] :
     key_word = str(row[0].value)
     print(str(cc)+str(key_word))
     cc=cc+1
@@ -53,7 +53,7 @@ for row in rows[1:260] :
             new_row.extend(result)
             all_list.append((new_row))
     
-    while len(all_list)==50:
+    while len(all_list)==38:
         wb2 = Workbook()
         ws2 = wb2.active
         ws2.append(['公司抬头','姓名','手机号','邮箱','座机','QQ','微信','职位','部门','行业类型','客户类型','名单来源',
