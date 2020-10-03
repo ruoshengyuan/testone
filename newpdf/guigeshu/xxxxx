@@ -1,0 +1,87 @@
+# -*- coding: utf-8 -*-
+import re
+import os
+import pandas as pd
+from pdfminer.converter import PDFPageAggregator
+from pdfminer.layout import LTTextBoxHorizontal, LAParams
+from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
+from pdfminer.pdfinterp import PDFTextExtractionNotAllowed
+from pdfminer.pdfparser import PDFParser, PDFDocument
+
+FENGZHUANG={'L':'3225','K':'3225','M':'DIP','D':'7050'}
+DIANYA={'3':'3.3V','2.85':'2.85V','2.5':'2.5V','1.8':'1.8V','5':'5.0V'}
+ZHANKONG={'5':'45%~55%','6':'40%~60%'}
+SHUCHU={'D':'LVDS','P':'PECL/LVPECL','H':'HCSL'}
+
+def filelist():
+    pdflist = []
+    for files in os.walk("/home/shiyanlou/testone/testone/"):
+        for name in files:
+            for real in name :
+                (realname,nametype) = os.path.splitext(real)
+                if nametype==".pdf":
+                    pdflist.append(real)
+    return pdflist
+def parse(path):
+        try:
+            fp = open(path, 'rb')
+            praser_pdf = PDFParser(fp)
+            doc = PDFDocument()
+            praser_pdf.set_document(doc)
+            doc.set_parser(praser_pdf)
+            doc.initialize()
+            if not doc.is_extractable:
+                raise PDFTextExtractionNotAllowed
+            else:
+                rsrcmgr = PDFResourceManager()
+                laparams = LAParams()
+                device = PDFPageAggregator(rsrcmgr, laparams=laparams)
+                interpreter = PDFPageInterpreter(rsrcmgr, device)
+                results = []
+                page = next(doc.get_pages())
+                interpreter.process_page(page)
+                layout = device.get_result()
+                for out in layout:
+                    if isinstance(out, LTTextBoxHorizontal):
+                        results.append(out.get_text().strip("\n"))
+                return(results)
+
+        except Exception as e:     
+            print("a", str(e))
+def infolist(m):
+    leibie = ()
+    liaohao = ()
+    kehu = ()
+    guigeshu = ()
+    riqi = ()
+    bianxie = ()
+    info = []
+    for i in range(len(m)) :
+        if re.match('.*-.*-.*-.*-.*',m[i],re.I|re.M):
+            leibie = str(m[i-1]).strip()
+            liaohao = str(m[i]).strip()
+            kehu = str(m[i+1]).strip()
+        if re.match('\d\d\d\d-.*-.*',m[i],re.I|re.M):
+            guigeshu = str(m[i-1]).strip()
+            riqi = str(m[i]).strip()
+            bianxie = str(m[i+1]).strip()
+    info = [leibie,liaohao,kehu,guigeshu,riqi,bianxie]
+    return info
+def wuliao(g):
+    pass
+
+if __name__ == "__main__":
+    n = filelist()
+    all_list = []
+
+    for pdfway in n :
+        linshi = []
+        i = parse(pdfway)
+        k = infolist(i)
+        linshi.append(pdfway)
+        linshi.extend(k)
+        # n = wuliao(k[2])
+        # linshi.extend(n)
+        all_list.append(linshi)
+    print(len(all_list))
+    print(all_list)
