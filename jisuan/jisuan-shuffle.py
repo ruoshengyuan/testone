@@ -6,6 +6,7 @@ from docx.shared import Pt,Inches
 from docx.enum.style import WD_STYLE_TYPE
 
 
+##99乘法试题
 def Night():
     result = []
     for i in range(1,10) :
@@ -16,6 +17,8 @@ def Night():
 
 NIGHT = Night()
 
+##100以内的加法，以99乘法的为其中一个加，
+##另外一个m为100以内数字，进行加和，要保证结果仍在100以内
 def Jia_9():
     result = []
     for i in range(len(NIGHT)) :
@@ -28,8 +31,11 @@ def Jia_9():
                 result.append((shizi2,daan))
     return result
 
+
 JIA_9 =  Jia_9()
 
+##100以内的减法，以99乘法的为其中一个加，
+##另外一个m为100以内数字，进行减法，要保证结果仍在100以内
 def Jian_9():
     result = []
     for i in range(len(NIGHT)) :
@@ -48,7 +54,8 @@ def Jian_9():
 
 JIAN_9 = Jian_9()
 
-
+##连加连减，加法在前
+##要保证结果仍在100以内
 def Jia_qian():
     result = []
     for i in range (10,100):
@@ -71,6 +78,9 @@ def Jia_qian():
 
 JIA_QIAN = Jia_qian()
 
+
+##连加连减，减法在前
+##要保证结果仍在100以内
 def Jian_qian():
     result = []
     for i in range (10,100):
@@ -94,6 +104,10 @@ def Jian_qian():
 
 JIAN_QIAN = Jian_qian()
 
+
+
+##99乘法表对应的除法运算，包含减法
+##要保证结果仍在100以内
 def Chu_Jian_9():
     result = []
     for i in range(len(NIGHT)) :
@@ -112,6 +126,10 @@ def Chu_Jian_9():
 
 CHU_JIAN_9 = Chu_Jian_9()
 
+
+
+##99乘法表对应的除法运算，包含加法
+##要保证结果仍在100以内
 def Chu_Jia_9():
     result = []
     for i in range(len(NIGHT)) :
@@ -130,6 +148,10 @@ def Chu_Jia_9():
 
 CHU_JIA_9 = Chu_Jia_9()
 
+
+
+##1000以内的加减法
+##要保证结果仍在1000以内，这个应该是算成竖式，1000道题目以内
 def Jia_qian1000():
     result2 = []
     k = 0
@@ -156,6 +178,8 @@ def Jia_qian1000():
 
 JIA_QIAN1000 = Jia_qian1000()
 
+##1000以内的加减法
+##要保证结果仍在1000以内，这个应该是算成竖式，1000道题目以内
 def Jian_qian1000():
     result2 = []
     k = 0
@@ -183,12 +207,17 @@ def Jian_qian1000():
 JIAN_QIAN1000 = Jian_qian1000()
 
 
+###主程序
+
 if __name__ == "__main__" :
 
 
+#分别是两种类型题目，所以分开
     result = []
     result2 = []
 
+#随机顺序6种题型，加入到result中来，前面的6种都是全部遍历的，
+###，题库只要200题，200题，100题，100题，200题，200题，只要是符合的都在题库当中了
     random.shuffle(JIA_9)
     random.shuffle(JIAN_9)
     random.shuffle(JIA_QIAN)
@@ -202,20 +231,24 @@ if __name__ == "__main__" :
     result.extend(CHU_JIA_9[0:199])
     result.extend(CHU_JIAN_9[0:199])
 
+#各产生1000道题目，然后进行随机顺序加入题库，取前500题
     random.shuffle(JIA_QIAN1000)
     random.shuffle(JIAN_QIAN1000)
     result2.extend(JIA_QIAN1000[0:499])
     result2.extend(JIAN_QIAN1000[0:499])
 
-
+###再次随机顺序
     random.shuffle(result)
     random.shuffle(result2)  
 
+###生成word的代码
     doc_yy = Document()
     styles = doc_yy.styles
+###增加新的模板，字体等
     some1 = styles.add_style('some1',WD_STYLE_TYPE.PARAGRAPH)
     some1.font.size=Pt(14)
 
+####取10题，为一个页面，取result总长度的少10
     i = 0 
     while i < len(result)-10:
         doc_yy.add_paragraph(result[i][0]+' '*50+result2[i][0],style=some1)
